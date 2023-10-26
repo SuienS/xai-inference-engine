@@ -1,6 +1,6 @@
 from services.fm_g_cam import FMGCam
 
-class InferenceEngine:
+class XAIInferenceEngine:
     def __init__(self, model, num_workers=1, device='cpu'):
         self.model = model
         self.num_workers = num_workers
