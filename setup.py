@@ -1,9 +1,23 @@
 from setuptools import setup, find_packages
 
+NAME = 'xai_inference_engine'
+AUTHOR = 'Ravidu Suien Rammuni Silva'
+AUTHOR_EMAIL = 'ravidus.ac@gmail.com'
+VERSION = '0.1.1' 
+DESCRIPTION = 'A pip package for XAI Inferencing'
+LONG_DESCRIPTION = 'TODO'
+
 setup(
-    name='example',
-    version='0.1.0',
-    packages=find_packages(include=['src.xai_inference_engine', 'src.xai_inference_engine.*']),
+    name=NAME,
+    author=AUTHOR,
+    author_email=AUTHOR_EMAIL,
+    version=VERSION,
+    description=DESCRIPTION,
+    packages=find_packages(
+        where='src',
+        include=['xai_inference_engine', 'xai_inference_engine.*']
+    ),
+    package_dir={'': 'src'},
     install_requires=[
         'colorama==0.4.6',
         'contourpy==1.1.1',

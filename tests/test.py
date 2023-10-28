@@ -2,26 +2,21 @@ from PIL import Image
 import torch
 from torch.nn import functional as F
 from torchvision.transforms.functional import to_pil_image, pil_to_tensor
-import matplotlib.pyplot as plt
-import numpy as np
-import torchinfo
 
-import matplotlib.pylab as pl
-from matplotlib.colors import ListedColormap, LinearSegmentedColormap
 import requests
 
 import os
 import sys
-sys.path.append(os.path.join(os.path.dirname(__file__), ".."))
+sys.path.append(os.path.join(os.path.dirname(__file__), "../"))
 
-if __name__ == "__main__":
+def run_test():
     
     print("[INFO]: Running test.py")
 
     print("[INFO]: Testing XAIInferenceEngine...")
 
     print("[INFO]: Importing Libraries...")
-    from src.xai_inference_engine.xai_inference_engine import XAIInferenceEngine
+    from xai_inference_engine import XAIInferenceEngine
     from torchvision.models import resnet50, ResNet50_Weights
 
     device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
@@ -65,9 +60,11 @@ if __name__ == "__main__":
     )
 
     print("[INFO]: Displaying Results...")
-    print("Predictions: {}".format(preds))
-    print("Sorted Prediction Indices: {}".format(sorted_pred_indices))
-    print("Heatmaps shape: {}".format(heatmaps.shape))
-    print("Super Imposed Image: {}".format(super_imp_img))
+    print("        Predictions: {}".format(preds.shape))
+    print("        Sorted Prediction Indices: {}".format(sorted_pred_indices.cpu().numpy()[:10]))
+    print("        Heatmaps shape: {}".format(heatmaps))
+    print("        Super Imposed Image: {}".format(super_imp_img))
 
-    
+
+if __name__ == "__main__":
+    run_test()

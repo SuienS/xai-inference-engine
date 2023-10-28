@@ -1,14 +1,14 @@
+import threading
 import torch
 from PIL import Image
 
 import os
 import sys
 
-sys.path.append(os.path.join(os.path.dirname(__file__), "."))
+# sys.path.append(os.path.join(os.path.dirname(__file__), "."))
 
-from services.fm_g_cam import FMGCam
-from utils.image_utils import ImageUtils
-
+from .services import FMGCam
+from .utils import ImageUtils
 
 class XAIInferenceEngine:
     def __init__(
@@ -45,9 +45,19 @@ class XAIInferenceEngine:
         image_width: int = 224,
         image_height: int = 224,
     ):
-        preds, sorted_pred_indices, heatmaps = self.fm_g_cam_generator(
-            img_tensor, class_count=class_count, enhance=enhance, class_rank_index=class_rank_index
+        # Increase the stack size to prevent stack overflow  # TODO: Try to remove this
+        threading.stack_size(1000000)
+        fm_g_cam_generator_thread = threading.Thread(
+            target=self.fm_g_cam_generator,
+            kwargs={
+                "img_tensor": img_tensor,
+                "class_count": class_count,
+                "enhance": enhance,
+                "class_rank_index": class_rank_index,
+            },
         )
+        fm_g_cam_generator_thread.start()
+        preds, sorted_pred_indices, heatmaps = self.fm_g_cam_generator.my_queue.get()
 
         heatmaps = ImageUtils.colourise_heatmaps(heatmaps)
 

@@ -1,5 +1,4 @@
-import matplotlib.pylab as pl
-from matplotlib.colors import ListedColormap, LinearSegmentedColormap
+from matplotlib.colors import LinearSegmentedColormap
 import matplotlib.pyplot as plt
 import numpy as np
 from PIL import Image

@@ -1,8 +1,13 @@
+import gc
 import torch
 from torch.nn import functional as F
-from utils.grad_utils import GradUtils
+from ..utils import GradUtils
+import queue
+
 
 class FMGCam:
+
+    
     def __init__(self, model, layer_name, device=None):
         self.model = model
         self.layer_name = layer_name
@@ -15,6 +20,14 @@ class FMGCam:
         self.model.to(self.device)
         self.model.eval()
 
+        self.my_queue = queue.Queue()
+    
+    # def storeInQueue(f, self=self):
+    #     def wrapper(*args):
+    #         self.my_queue.put(f(*args))
+    #     return wrapper
+
+    # @storeInQueue
     def __call__(self, img_tensor, class_count=3, enhance=True, class_rank_index=None):
 
         img_tensor = img_tensor.to(self.device)
@@ -58,5 +71,9 @@ class FMGCam:
         heatmaps = (heatmaps - torch.min(heatmaps))/(torch.max(heatmaps) - torch.min(heatmaps))
         
         # Process the generated heatmaps
+        heatmaps = heatmaps.detach().cpu().numpy()
 
-        return preds, sorted_pred_indices, heatmaps.detach().cpu().numpy()
+        gc.collect()
+        self.my_queue.put((preds, sorted_pred_indices, heatmaps))
+
+        return preds, sorted_pred_indices, heatmaps
