@@ -59,6 +59,10 @@ def run_test():
         img_tensor=img_tensor,
     )
 
+    print("[INFO]: Saving Results...")
+    super_imp_img.save("super_imp_img.jpg")
+    heatmaps.save("heatmaps.jpg")
+
     print("[INFO]: Displaying Results...")
     print("        Predictions: {}".format(preds.shape))
     print("        Sorted Prediction Indices: {}".format(sorted_pred_indices.cpu().numpy()[:10]))

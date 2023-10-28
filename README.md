@@ -58,6 +58,10 @@ preds, sorted_pred_indices, super_imp_img, heatmaps = xai_inferencer.predict(
     img_tensor=img_tensor,
 )
 
+print("[INFO]: Saving Results to the root folder...")
+super_imp_img.save("super_imp_img.jpg")
+heatmaps.save("heatmaps.jpg")
+
 print("[INFO]: Displaying Results...")
 print("        Predictions: {}".format(preds.shape))
 print("        Sorted Prediction Indices: {}".format(sorted_pred_indices.cpu().numpy()[:10]))
