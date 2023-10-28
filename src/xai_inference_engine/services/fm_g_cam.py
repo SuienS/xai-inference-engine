@@ -3,17 +3,21 @@ from torch.nn import functional as F
 from utils.grad_utils import GradUtils
 
 class FMGCam:
-    def __init__(self, model, layer_name, device):
+    def __init__(self, model, layer_name, device=None):
         self.model = model
         self.layer_name = layer_name
-        self.device = device
+
+        if device is None:
+            self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        else:
+            self.device = device
 
         self.model.to(self.device)
         self.model.eval()
 
     def __call__(self, img_tensor, class_count=3, enhance=True, class_rank_index=None):
 
-        img_tensor = img_tensor.to(self.device).unsqueeze(0)
+        img_tensor = img_tensor.to(self.device)
         preds, sorted_pred_indices, grad_list, act_list = GradUtils.get_model_pred_with_grads(
             model=self.model, 
             img_tensor=img_tensor, 

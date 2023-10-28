@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "xai_inference_engine"
+version = "0.1.0"
+authors = [
+  { name="Ravidu Suien Rammuni Silva", email="ravidus@gmail.com" },
+]
+description = "A pip package for XAI Inferencing"
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/SuienS/xai-inference-engine"
+"Bug Tracker" = "https://github.com/SuienS/xai-inference-engine/issues"
