@@ -40,6 +40,7 @@ class XAIInferenceEngine:
         img_tensor: torch.Tensor,
         class_count: int = 3,
         class_rank_index: int = None,
+        act_mode: str = "relu",
         enhance: bool = True,
         alpha: float = 0.8,
         image_width: int = 224,
@@ -54,6 +55,7 @@ class XAIInferenceEngine:
                 "class_count": class_count,
                 "enhance": enhance,
                 "class_rank_index": class_rank_index,
+                "act_mode": act_mode,
             },
         )
         fm_g_cam_generator_thread.start()

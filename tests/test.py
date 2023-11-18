@@ -1,7 +1,6 @@
 from PIL import Image
 import torch
 from torch.nn import functional as F
-from torchvision.transforms.functional import to_pil_image, pil_to_tensor
 
 import requests
 

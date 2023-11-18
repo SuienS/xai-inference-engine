@@ -40,6 +40,6 @@ class ImageUtils:
     def super_imposed_image(heatmaps, original_image, image_width=224, image_height=224, alpha=0.8):
         
         original_image = original_image.resize((image_width, image_height))
-        original_image = Image.blend(original_image, heatmaps.convert("RGB"), alpha=alpha)
+        original_image = Image.blend(original_image.convert("RGB"), heatmaps.convert("RGB"), alpha=alpha)
 
         return original_image

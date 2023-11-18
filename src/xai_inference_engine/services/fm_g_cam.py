@@ -28,7 +28,7 @@ class FMGCam:
     #     return wrapper
 
     # @storeInQueue
-    def __call__(self, img_tensor, class_count=3, enhance=True, class_rank_index=None):
+    def __call__(self, img_tensor, class_count=3, enhance=True, class_rank_index=None, act_mode="relu"):
 
         img_tensor = img_tensor.to(self.device)
         preds, sorted_pred_indices, grad_list, act_list = GradUtils.get_model_pred_with_grads(
@@ -64,8 +64,13 @@ class FMGCam:
         if enhance:
             heatmaps = F.normalize(heatmaps, p=2, dim=1)
 
-        # relu on top of the heatmap
-        heatmaps = F.relu(heatmaps)
+        # Activation on top of the heatmap
+        if act_mode == "relu":
+            heatmaps = F.relu(heatmaps)
+        elif act_mode == "gelu":
+            heatmaps = F.gelu(heatmaps)
+        elif act_mode == "elu":
+            heatmaps = F.elu(heatmaps)
         
         # Min-max normalization of the heatmap
         heatmaps = (heatmaps - torch.min(heatmaps))/(torch.max(heatmaps) - torch.min(heatmaps))
