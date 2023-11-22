@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 NAME = 'xai_inference_engine'
 AUTHOR = 'Ravidu Suien Rammuni Silva'
 AUTHOR_EMAIL = 'ravidus.ac@gmail.com'
-VERSION = '0.1.2' 
+VERSION = '0.1.4' 
 DESCRIPTION = 'A pip package for XAI Inferencing'
 LONG_DESCRIPTION = 'TODO'
 

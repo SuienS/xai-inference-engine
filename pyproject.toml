@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "xai_inference_engine"
-version = "0.1.2"
+version = "0.1.4"
 authors = [
   { name="Ravidu Suien Rammuni Silva", email="ravidus@gmail.com" },
 ]

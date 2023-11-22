@@ -3,7 +3,7 @@
 
 
 # XAI Inference Engine
-This package is a wrapper for inferencing with CNN-based PyTorch models. It takes a trained PyTorch CNN model and returns the predictions, sorted prediction indices and saliency maps. For the saliency maps the library uses the [FM-G-CAM](https://pypi.org/project/xai-inference-engine/) method. More type of saliency map generation methods will be added in the future. The package also provides a method to superimpose the saliency maps on the input image.
+This package is a wrapper for CNN-based PyTorch models that is capable of performing XAI inferencing. It wraps a trained PyTorch CNN model and allows it to return the predictions, sorted prediction indices and saliency maps when provided with a preprocessed input. For the saliency maps the library uses the [FM-G-CAM](https://pypi.org/project/xai-inference-engine/) method. More types of saliency map generation methods will be added in the future. The package also provides a method to superimpose the saliency maps on the input image.
 
 Users can also use the package to create their own inference engine by extending the `XAIInferenceEngine` class.
 
