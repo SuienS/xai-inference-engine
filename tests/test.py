@@ -53,19 +53,19 @@ def run_test():
     )
 
     print("[INFO]: Running XAIInferenceEngine.predict()...")
-    preds, sorted_pred_indices, super_imp_img, heatmaps = xai_inferencer.predict(
+    preds, sorted_pred_indices, super_imp_img, saliency_maps = xai_inferencer.predict(
         img=img,
         img_tensor=img_tensor,
     )
 
     print("[INFO]: Saving Results...")
     super_imp_img.save("super_imp_img.jpg")
-    heatmaps.save("heatmaps.jpg")
+    saliency_maps.save("saliency_maps.jpg")
 
     print("[INFO]: Displaying Results...")
     print("        Predictions: {}".format(preds.shape))
     print("        Sorted Prediction Indices: {}".format(sorted_pred_indices.cpu().numpy()[:10]))
-    print("        Heatmaps shape: {}".format(heatmaps))
+    print("        Heatmaps shape: {}".format(saliency_maps))
     print("        Super Imposed Image: {}".format(super_imp_img))
 
 

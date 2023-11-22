@@ -37,48 +37,48 @@ class FMGCam:
             last_conv_layer=self.layer_name,
             class_count=class_count)
 
-        heatmaps = GradUtils.weight_activations(act_list, grad_list)
+        saliency_maps = GradUtils.weight_activations(act_list, grad_list)
 
         if class_rank_index is None:
 
             # Concatenation of activation maps based on top n classes
-            heatmaps = torch.cat(heatmaps)
+            saliency_maps = torch.cat(saliency_maps)
 
-            # Filter the heatmap based on the maximum weighted activation along the channel axis
-            hm_mask_indices = heatmaps.argmax(dim=0).unsqueeze(0)
+            # Filter the saliency_map based on the maximum weighted activation along the channel axis
+            hm_mask_indices = saliency_maps.argmax(dim=0).unsqueeze(0)
 
-            hm_3d_mask = torch.cat([hm_mask_indices for _ in range(heatmaps.size()[0])])
+            hm_3d_mask = torch.cat([hm_mask_indices for _ in range(saliency_maps.size()[0])])
 
             hm_3d_mask = torch.cat(
-                [(hm_3d_mask[index] == (torch.ones_like(hm_3d_mask[index])*index)).unsqueeze(0) for index in range(heatmaps.size()[0])]
+                [(hm_3d_mask[index] == (torch.ones_like(hm_3d_mask[index])*index)).unsqueeze(0) for index in range(saliency_maps.size()[0])]
             ).long()
 
-            heatmaps *= hm_3d_mask
+            saliency_maps *= hm_3d_mask
 
         else:
 
-            heatmaps = heatmaps[class_rank_index]
+            saliency_maps = saliency_maps[class_rank_index]
 
         
-        # L2 Normalisation of the heatmap soften the differences
+        # L2 Normalisation of the saliency_map soften the differences
         if enhance:
-            heatmaps = F.normalize(heatmaps, p=2, dim=1)
+            saliency_maps = F.normalize(saliency_maps, p=2, dim=1)
 
-        # Activation on top of the heatmap
+        # Activation on top of the saliency_map
         if act_mode == "relu":
-            heatmaps = F.relu(heatmaps)
+            saliency_maps = F.relu(saliency_maps)
         elif act_mode == "gelu":
-            heatmaps = F.gelu(heatmaps)
+            saliency_maps = F.gelu(saliency_maps)
         elif act_mode == "elu":
-            heatmaps = F.elu(heatmaps)
+            saliency_maps = F.elu(saliency_maps)
         
-        # Min-max normalization of the heatmap
-        heatmaps = (heatmaps - torch.min(heatmaps))/(torch.max(heatmaps) - torch.min(heatmaps))
+        # Min-max normalization of the saliency_map
+        saliency_maps = (saliency_maps - torch.min(saliency_maps))/(torch.max(saliency_maps) - torch.min(saliency_maps))
         
-        # Process the generated heatmaps
-        heatmaps = heatmaps.detach().cpu().numpy()
+        # Process the generated saliency_maps
+        saliency_maps = saliency_maps.detach().cpu().numpy()
 
         gc.collect()
-        self.my_queue.put((preds, sorted_pred_indices, heatmaps))
+        self.my_queue.put((preds, sorted_pred_indices, saliency_maps))
 
-        return preds, sorted_pred_indices, heatmaps
+        return preds, sorted_pred_indices, saliency_maps

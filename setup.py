@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 NAME = 'xai_inference_engine'
 AUTHOR = 'Ravidu Suien Rammuni Silva'
 AUTHOR_EMAIL = 'ravidus.ac@gmail.com'
-VERSION = '0.1.1' 
+VERSION = '0.1.2' 
 DESCRIPTION = 'A pip package for XAI Inferencing'
 LONG_DESCRIPTION = 'TODO'
 
@@ -43,9 +43,6 @@ setup(
         'torch==2.1.0',
         'typing_extensions==4.8.0',
     ],
-    extras_require={
-        'interactive': ['jupyter'],
-    },
     # setup_requires=['pytest-runner', 'flake8'],
     # tests_require=['pytest'],
     # entry_points={

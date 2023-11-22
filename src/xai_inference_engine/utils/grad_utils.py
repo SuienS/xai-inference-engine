@@ -52,7 +52,7 @@ class GradUtils:
 
     @staticmethod
     def weight_activations(activation_list, gradient_list):
-        heatmaps = []
+        saliency_maps = []
 
         for index, activations in enumerate(activation_list):
             gradients = gradient_list[index]
@@ -67,13 +67,13 @@ class GradUtils:
                 activations[:, i, :, :] *= avg_pooled_gradients[i]
 
             # average the channels of the activations
-            heatmap = torch.mean(activations, dim=1).squeeze()
+            saliency_map = torch.mean(activations, dim=1).squeeze()
                     
-            heatmaps.append(heatmap.unsqueeze(0).detach().cpu())
+            saliency_maps.append(saliency_map.unsqueeze(0).detach().cpu())
 
         avg_pooled_gradients = torch.mean(
             gradients[0], # Size [1, 1024, 7, 7] TODO - make this support other models
             dim=[0, 2, 3]
         )
 
-        return heatmaps
+        return saliency_maps

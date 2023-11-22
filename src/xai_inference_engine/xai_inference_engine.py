@@ -59,16 +59,16 @@ class XAIInferenceEngine:
             },
         )
         fm_g_cam_generator_thread.start()
-        preds, sorted_pred_indices, heatmaps = self.fm_g_cam_generator.my_queue.get()
+        preds, sorted_pred_indices, saliency_maps = self.fm_g_cam_generator.my_queue.get()
 
-        heatmaps = ImageUtils.colourise_heatmaps(heatmaps)
+        saliency_maps = ImageUtils.colourise_heatmaps(saliency_maps)
 
         super_imp_img = ImageUtils.super_imposed_image(
-            heatmaps,
+            saliency_maps,
             img,
             alpha=alpha,
             image_width=image_width,
             image_height=image_height,
         )
 
-        return preds, sorted_pred_indices, super_imp_img, heatmaps
+        return preds, sorted_pred_indices, super_imp_img, saliency_maps

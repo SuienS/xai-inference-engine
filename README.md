@@ -1,5 +1,14 @@
 # XAI Inference Engine
-Todo Description...
+This package is a warapper for inferencing with CNN-based PyTorch models. It takes a trained PyTorch CNN model and returns the predictions, sorted prediction indices and saliency maps. For the saliency maps the library uses the [FM-G-CAM](https://pypi.org/project/xai-inference-engine/) method. More type of saliency map generation methods will be added in the future. The package also provides a method to superimpose the saliency maps on the input image.
+
+Users can also use the package to create their own inference engine by extending the `XAIInferenceEngine` class.
+
+Advanced Tutorials: Coming Soon...
+
+# Requirements
+- Python 3.8+
+- PyTorch 2.0+
+
 
 # Installation
 Execute the following command in your terminal to install the package.
@@ -8,7 +17,7 @@ pip install xai-inference-engine
 ```
 
 # Usage
-Follow the example below to use the package. Copy and paste the code into a python script and run it.
+Follow the example below to use the package. Copy and paste the code into a python script and run it. Make sure you have the requirements installed. 😊
 
 ```python
 
@@ -53,19 +62,22 @@ xai_inferencer = XAIInferenceEngine(
 )
 
 print("[INFO]: Running XAIInferenceEngine.predict()...")
-preds, sorted_pred_indices, super_imp_img, heatmaps = xai_inferencer.predict(
+preds, sorted_pred_indices, super_imp_img, saliency_maps = xai_inferencer.predict(
     img=img,
     img_tensor=img_tensor,
 )
 
 print("[INFO]: Saving Results to the root folder...")
 super_imp_img.save("super_imp_img.jpg")
-heatmaps.save("heatmaps.jpg")
+saliency_maps.save("saliency_maps.jpg")
 
 print("[INFO]: Displaying Results...")
 print("        Predictions: {}".format(preds.shape))
 print("        Sorted Prediction Indices: {}".format(sorted_pred_indices.cpu().numpy()[:10]))
-print("        Heatmaps shape: {}".format(heatmaps))
+print("        Heatmaps shape: {}".format(saliency_maps))
 print("        Super Imposed Image: {}".format(super_imp_img))
 
 ```
+
+# Author
+- [Ravidu Silva](https://www.linkedin.com/in/ravidu-silva/)
