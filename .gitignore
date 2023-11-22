@@ -161,3 +161,6 @@ cython_debug/
 
 # PyPirc
 .pypirc
+
+# Dev Notes
+notes.txt
