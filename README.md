@@ -11,6 +11,8 @@ Advanced Tutorials: Coming Soon...
 
 [Github](https://github.com/SuienS/xai-inference-engine) | [PyPi](https://pypi.org/project/xai-inference-engine/)
 
+Publication: [FM-G-CAM: A Holistic Approach for Explainable AI in Computer Vision](https://doi.org/10.48550/arXiv.2312.05975)
+
 # Requirements
 - Python 3.8+
 - PyTorch 2.0+
